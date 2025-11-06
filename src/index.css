@@ -1,0 +1,68 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --calendar-bg: #f8f9fa;
+  --calendar-border: #e9ecef;
+  --calendar-shadow: rgba(0, 0, 0, 0.12);
+
+  --text-primary: #242424;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+
+  --day-bg: rgb(240, 239, 239);
+  --day-bg-hover: lightgray;
+  --day-border: darkgray;
+  --day-weekend-bg: rgba(0, 0, 0, 0.1);
+  --day-weekend-text: rgba(0, 0, 0, 0.5);
+
+  --today-color: green;
+  --box-shadow-color: rgba(0, 0, 0, 0.35);
+
+  background-color: rgba(255, 255, 255, 0.87);
+  color: var(--text-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+button:focus {
+  outline: none;
+  border: 2px solid gray;
+}
