@@ -38,6 +38,7 @@ export const App = () => {
         initialDate="2025-11-05"
         locale={locale}
         onDateSelect={handleDateSelect}
+        filled={true}
       />
       <div className={styles.selectedDate}>{selectedDate}</div>
     </div>

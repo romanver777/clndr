@@ -41,10 +41,9 @@
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 6px;
   padding: 12px;
   background-color: var(--calendar-bg);
-  min-height: 256px;
 }
 
 .day {
@@ -95,13 +94,11 @@
 }
 
 .dayOtherMonth {
-  color: var(--text-muted);
-  background-color: var(--calendar-bg);
+  background-color: transparent;
 }
 
 .dayOtherMonth:hover {
   background-color: #e9ecef;
-  border-color: #dee2e6;
 }
 
 .dayToday {
@@ -160,7 +157,7 @@
 
   .days {
     padding: 8px;
-    min-height: 240px;
+    gap: 2px;
   }
 
   .day {
@@ -173,6 +170,10 @@
   .dayEndWeek {
     background: var(--day-weekend-bg);
     color: var(--day-weekend-text);
+  }
+
+  .dayOtherMonth {
+    background-color: transparent;
   }
 
   .dayToday {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 import styles from "./calendar.module.css";
 import {
   getDaysInMonth,
@@ -9,17 +9,20 @@ import {
   isToday,
 } from "./utils";
 import { CalendarHeader } from "./ui/calendar-header";
+import { useKeyboard } from "./hooks/useKeyboard";
 
 interface CalendarProps {
   initialDate?: string;
   locale?: string;
   onDateSelect?: (date: string) => void;
+  filled?: boolean;
 }
 
 export const Calendar: React.FC<CalendarProps> = ({
   initialDate,
   locale = "ru-RU",
   onDateSelect,
+  filled = false,
 }) => {
   const [currentDate, setCurrentDate] = useState<Date>(
     initialDate ? new Date(initialDate) : new Date()
@@ -31,18 +34,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     initialDate ? new Date(initialDate).getFullYear() : new Date().getFullYear()
   );
   const [showYearSelector, setShowYearSelector] = useState<boolean>(false);
-
-  const handleEscButton = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape" && showYearSelector) setShowYearSelector(false);
-    },
-    [showYearSelector]
-  );
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscButton);
-    return () => document.removeEventListener("keydown", handleEscButton);
-  }, [handleEscButton]);
 
   const weekdays = useMemo(() => {
     const baseDate = new Date(2024, 0, 1);
@@ -80,14 +71,24 @@ export const Calendar: React.FC<CalendarProps> = ({
     setShowYearSelector(false);
   };
 
-  const handleDateClick = (date: Date | null): void => {
-    if (date) {
-      setSelectedDate(date);
-      onDateSelect?.(date.toLocaleDateString("en-CA"));
+  useKeyboard(showYearSelector, handleYearSelectorClose);
+
+  const handleDateClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    date: Date | null
+  ): void => {
+    if (!date) return;
+
+    if (!isCurrentMonth(date, currentDate)) {
+      setCurrentDate(new Date(date.getFullYear(), date.getMonth(), 1));
+      (e.target as HTMLButtonElement).blur();
     }
+
+    setSelectedDate(date);
+    onDateSelect?.(date.toLocaleDateString("en-CA"));
   };
 
-  const days = getDaysInMonth(currentDate);
+  const days = getDaysInMonth(currentDate, filled);
 
   const getDayClassName = (date: Date | null): string => {
     const classNames = [styles.day];
@@ -162,7 +163,7 @@ export const Calendar: React.FC<CalendarProps> = ({
           <button
             key={index}
             className={getDayClassName(date)}
-            onClick={() => handleDateClick(date)}
+            onClick={(e) => handleDateClick(e, date)}
             tabIndex={date ? index : -1}
           >
             {date ? date.getDate() : ""}
