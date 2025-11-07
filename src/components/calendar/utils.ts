@@ -1,7 +1,10 @@
 export const getFirstToUpperCase = (str: string) =>
   str[0].toUpperCase() + str.slice(1);
 
-export const getDaysInMonth = (date: Date): (Date | null)[] => {
+export const getDaysInMonth = (
+  date: Date,
+  filled: boolean
+): (Date | null)[] => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const firstDay = new Date(year, month, 1);
@@ -13,14 +16,41 @@ export const getDaysInMonth = (date: Date): (Date | null)[] => {
 
   const days: (Date | null)[] = [];
 
-  for (let i = 0; i < adjustedFirstDay; i++) {
-    days.push(null);
+  if (filled) {
+    if (adjustedFirstDay > 0) {
+      const prevMonth = new Date(year, month, 0);
+      const prevMonthDays = prevMonth.getDate();
+
+      for (
+        let i = prevMonthDays - adjustedFirstDay + 1;
+        i <= prevMonthDays;
+        i++
+      ) {
+        days.push(new Date(year, month - 1, i));
+      }
+    }
+  } else {
+    for (let i = 0; i < adjustedFirstDay; i++) {
+      days.push(null);
+    }
   }
 
   for (let i = 1; i <= daysInMonth; i++) {
     days.push(new Date(year, month, i));
   }
 
+  if (filled) {
+    let totalCells = days.length / 7 > 5 ? 7 * 6 : 7 * 5;
+    if (days.length / 7 === 4) totalCells = 7 * 4;
+
+    const remainingCells = totalCells - days.length;
+
+    if (remainingCells > 0) {
+      for (let i = 1; i <= remainingCells; i++) {
+        days.push(new Date(year, month + 1, i));
+      }
+    }
+  }
   return days;
 };
 
