@@ -167,12 +167,26 @@
     color: var(--text-primary);
   }
 
+  .day:hover {
+    color: var(--text-primary);
+    background: var(--day-bg);
+  }
+
   .dayEndWeek {
     background: var(--day-weekend-bg);
     color: var(--day-weekend-text);
   }
 
+  .dayEndWeek:hover {
+    background: var(--day-weekend-bg);
+    color: var(--day-weekend-text);
+  }
+
   .dayOtherMonth {
+    background-color: transparent;
+  }
+
+  .dayOtherMonth:hover {
     background-color: transparent;
   }
 
